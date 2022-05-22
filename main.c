@@ -49,123 +49,65 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-///------------------CarGo-------------------
-void CarGo(void){  
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_2, 300);
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_3, 300);
-  
-  HAL_GPIO_WritePin(GPIOA, A0_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A1_Pin, GPIO_PIN_RESET);
-	
-  HAL_GPIO_WritePin(GPIOA, A2_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A3_Pin, GPIO_PIN_RESET);
-  
-  
-}
-///------------------CarStop-------------------
-void CarStop(void){  
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_2, 900);
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_3, 900);
-  
-  HAL_GPIO_WritePin(GPIOA, A0_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A1_Pin, GPIO_PIN_SET);
-  
-  HAL_GPIO_WritePin(GPIOA, A2_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A3_Pin, GPIO_PIN_SET);
-  
-  
-}
-///------------------CarLeftAround-------------------
-void CarLeftAround(void){  
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_2, 400);
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_3, 400);
-  
-  HAL_GPIO_WritePin(GPIOA, A0_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A1_Pin, GPIO_PIN_RESET);
-  
-  HAL_GPIO_WritePin(GPIOA, A2_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(GPIOA, A3_Pin, GPIO_PIN_SET);
-  
-  
-}
-///------------------CarRightAround-------------------
-void CarRightAround(void){  
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_2, 400);
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_3, 400);
-  
-  HAL_GPIO_WritePin(GPIOA, A0_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(GPIOA, A1_Pin, GPIO_PIN_SET);
-  
-  HAL_GPIO_WritePin(GPIOA, A2_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A3_Pin, GPIO_PIN_RESET);
-  
-}
-///------------------CarBack-------------------
-void CarBack(void){  
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_2, 300);
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_3, 300);
-  
-  HAL_GPIO_WritePin(GPIOA, A0_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(GPIOA, A1_Pin, GPIO_PIN_SET);
-  
-  HAL_GPIO_WritePin(GPIOA, A2_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(GPIOA, A3_Pin, GPIO_PIN_SET);
-  
-}
-///------------------CarLeft-------------------
-void CarLeft(void){  
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_2, 300);
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_3, 900);
-  
-  HAL_GPIO_WritePin(GPIOA, A0_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A1_Pin, GPIO_PIN_RESET);
-  
-  HAL_GPIO_WritePin(GPIOA, A2_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A3_Pin, GPIO_PIN_RESET);
-  
-}
-///------------------CarBigLeft-------------------
-void CarBigLeft(void){  
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_2, 100);
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_3, 900);
-  
-  HAL_GPIO_WritePin(GPIOA, A0_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A1_Pin, GPIO_PIN_RESET);
-  
-  HAL_GPIO_WritePin(GPIOA, A2_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A3_Pin, GPIO_PIN_RESET);
-  
-}
-//////////++++++++++++++++++++
-///------------------CarRight-------------------
-void CarRight(void){  
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_2, 900);
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_3, 300);
-  
-  HAL_GPIO_WritePin(GPIOA, A0_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A1_Pin, GPIO_PIN_RESET);
-  
-  HAL_GPIO_WritePin(GPIOA, A2_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A3_Pin, GPIO_PIN_RESET);
-  
-}
-///------------------CarBigRight-------------------
-void CarBigRight(void){  
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_2, 900);
-   __HAL_TIM_SET_COMPARE (&htim3, TIM_CHANNEL_3, 100);
-  
-  HAL_GPIO_WritePin(GPIOA, A0_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A1_Pin, GPIO_PIN_RESET);
-  
-  HAL_GPIO_WritePin(GPIOA, A2_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOA, A3_Pin, GPIO_PIN_RESET);
-  
-}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/*-----------------------------------------------------------Go_Forward-------------------------------------------------------*/
 
+void Forward(double PWM_L,double PWM_R)
+{
+			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, PWM_L);      //Left
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET); 
+	
+			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, PWM_R);      //Right
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET);   
+}
+/*-----------------------------------------------------------Go_Backward-------------------------------------------------------*/
+void Backward(double PWM_L,double PWM_R)
+{
+			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, PWM_L);     //Left
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET); 
+	
+			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, PWM_R);     //Right
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET); 
+}
+/*---------------------------------------------------------------stop--------------------------------------------------------------*/
+void stop()
+		{
+			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, 0);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10 | GPIO_PIN_0, GPIO_PIN_RESET);
+			
+			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, 0);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13 | GPIO_PIN_12, GPIO_PIN_RESET);
+		}
+/*-------------------------------------------------------------------Turn_Left------------------------------------------------------------*/
+	void Turn_Left(double PWM_L,double PWM_R)
+	{
+			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, PWM_L);     //Left
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET); 
+	
+			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, PWM_R);     //Right
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET); 
+	}	
+/*-------------------------------------------------------------------Turn_Right----------------------------------------------------------*/
+	void Turn_Right(double PWM_L,double PWM_R)
+	{
+			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_4, PWM_L);     //Left
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET); 
+	
+			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, PWM_R);     //Right
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET); 
+	}
 /* USER CODE END 0 */
 
 /**
@@ -196,12 +138,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM2_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-	HAL_TIM_Base_Start(&htim3); 
-	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_2);  
-	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_3);  
-
+  HAL_TIM_Base_Start(&htim2);
+  HAL_TIM_Base_Start(&htim3); 
+  HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_4);  
+  HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_4);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -211,47 +154,23 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		CarGo();
+		
+		Forward(75,75);
 		HAL_Delay(1000);
 		
-		CarStop();
+		stop();
 		HAL_Delay(1000);
+		
+		Backward(75,75);
+		HAL_Delay(1000);  
 
-		CarLeftAround();
-		HAL_Delay(1000);
-		
-		CarRightAround();
-		HAL_Delay(1000);
-		
-		CarBack();
-		HAL_Delay(1000);
-		
-		CarLeft();
-		HAL_Delay(1000);
-		
-		CarBigLeft();
-		HAL_Delay(1000);
-		
-		CarRight();
-		HAL_Delay(1000);
-		
-		CarBigRight();
-		HAL_Delay(1000);
-		
-		
-		
-		
-		
-	/*	
-	__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_3,75);
-	HAL_GPIO_WritePin(GPIOA,A0_Pin,GPIO_PIN_SET);   
-  HAL_GPIO_WritePin(GPIOA,A1_Pin,GPIO_PIN_RESET);
-
- 	__HAL_TIM_SET_COMPARE(&htim3,TIM_CHANNEL_2,50);
-  HAL_GPIO_WritePin(GPIOA,A2_Pin,GPIO_PIN_SET);   
-  HAL_GPIO_WritePin(GPIOA,A3_Pin,GPIO_PIN_RESET);*/
-
+		Turn_Left(35,75);               //Turn to left
+		HAL_Delay(2000);
+	
+		Turn_Right(75,35);              //Turn to right
+		HAL_Delay(2000);
   }
+	
   /* USER CODE END 3 */
 }
 
@@ -267,10 +186,13 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -279,12 +201,12 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV16;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV16;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV16;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
